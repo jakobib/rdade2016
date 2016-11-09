@@ -1,0 +1,238 @@
+% requires CTAN package tikzposter, xelatex, and Calibri font
+\documentclass[a1paper,25pt]{tikzposter}% use 20pt for more text
+\usetheme{Simple}
+
+%%% VZG STYLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{GBV}{RGB}{89,124,199}
+\definecolor{GBVDark}{RGB}{0,51,153}
+
+\definecolorstyle{gbvColorStyle}{
+  \definecolor{noteColor}{HTML}{FCE565}%FCF0AD}
+}{
+  % background colors
+  \colorlet{backgroundcolor}{white}
+  \colorlet{framecolor}{white}
+  % title colors
+  \colorlet{titlefgcolor}{white}
+  \colorlet{titlebgcolor}{GBV}
+  % block colors
+  \colorlet{blocktitlebgcolor}{GBV}
+  \colorlet{blocktitlefgcolor}{GBVDark}
+  \colorlet{blockbodybgcolor}{white}
+  \colorlet{blockbodyfgcolor}{black}
+  % innerblock colors
+  \colorlet{innerblocktitlebgcolor}{white}
+  \colorlet{innerblocktitlefgcolor}{black}
+  \colorlet{innerblockbodybgcolor}{white}
+  \colorlet{innerblockbodyfgcolor}{black}
+  % note colors
+  \colorlet{notefgcolor}{black}
+  \colorlet{notebgcolor}{noteColor!70!white}
+  \colorlet{notefrcolor}{noteColor}
+}
+
+\makeatletter
+\TP@showlatexaffectionfalse
+
+\newcommand{\email}[1]{\def\@email{#1}}
+\newcommand{\doi}[1]{\def\@doi{#1}}
+\newcommand{\license}[1]{\def\@license{#1}}
+\newcommand{\about}[1]{\def\@about{#1}}
+\newcommand\titlelogoleft[2][]{\def\@titlelogoleft{\includegraphics[#1]{#2}}}
+\newcommand\titlelogoright[2][]{\def\@titlelogoright{\includegraphics[#1]{#2}}}
+
+\definetitlestyle{FilledWithLogo}{
+    width=\paperwidth, roundedcorners=0, linewidth=0pt, innersep=1.5cm,
+    titletotopverticalspace=0mm, titletoblockverticalspace=20mm,
+}{
+   \draw[draw=none, fill=titlebgcolor]%
+   (\titleposleft,\titleposbottom) rectangle (\titleposright,\titlepostop); % 
+   \ifdefined\@titlelogoleft\node at (\titleposleft,\titleposbottom) [anchor=south west] {
+       \@titlelogoleft};
+   \fi%
+   \ifdefined\@titlelogoright\node at (\titleposright,\titleposbottom) [anchor=south east] {
+       \@titlelogoright};
+   \fi%
+}
+\settitle{ \centering \vbox{
+    \centering
+    \color{titlefgcolor} {\bfseries \Huge \resizebox{0.95\linewidth}{!}{\@title} \par}
+    \vspace*{1em}
+    {\huge \@author ~ \texttt{\LARGE<\@email>} \par} \vspace*{1em} {\LARGE \@institute}
+}
+}
+\makeatother
+
+\usecolorstyle{gbvColorStyle}
+\usetitlestyle{FilledWithLogo}
+\useblockstyle{Minimal}
+\useinnerblockstyle{Table}
+\usenotestyle{Sticky}
+
+\usepackage{fontspec}
+\setmainfont{Calibri}
+\renewcommand*\familydefault{\sfdefault}
+
+\usepackage[colorlinks=true,citecolor=GBVDark,urlcolor=GBVDark,linkcolor=GBVDark]{hyperref}
+
+%%% END OF VZG STYLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% VZG logo
+\titlelogoright[height=30mm]{vzglogo}
+
+% TODO: BARTOC logo? coli-conc logo? GFBio?
+
+% references
+\usepackage{lipsum}
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{bibliography.bib}
+\renewcommand*{\bibfont}{\footnotesize}
+
+% metadata
+\title{Terminology Registries and Services}
+\author{Jakob Vo\ss}
+\date{2016-11}
+\email{jakob.voss@gbv.de}
+\institute{Verbundzentrale des GBV (VZG), G\"ottingen}
+\doi{10.5281/zenodo.XXXXX}% TODO: get DOI for publication of this poster
+\license{CC-BY-SA}
+\about{Project coli-conc is funded by DFG}
+
+% bugfix to marry tikzposter & hyperref
+\def\HyperFirstAtBeginDocument#1{#1}
+
+% poster content
+\begin{document}
+\maketitle
+
+\begin{columns}
+\column{.5}
+\block{Terminologies}{
+
+    Terminologies or more general Knowledge Organization Systems (KOS) \ldots
+
+  \textit{define terminologies and illustrate benefits. Examples of Terminologies}
+
+  \ldots many types of KOS can be identified \cite{Voss2016a}
+  \ldots
+  simple lists of concepts (Dublin Core Elements),
+  identifier systems (ORCID),
+  authority files, 
+  classification systems,
+  ontologies.
+  \ldots
+
+}
+\note[angle=-50,rotate=10,width=110mm]
+    {\url{http://bartoc.org/} lists $\sim$ 2.000 terminologies}
+
+
+% Where to find and access terminologies?
+\column{.5}
+\block{Terminology Registries}{
+
+ Terminology registries \cite{Golub2014} can broadly be classified into
+
+  \begin{tikzfigure}
+    \begin{tabular}{ll}
+      \textbf{Registries}   & list and describe terminologies\\
+      \textbf{Repositories} & contain full terminologies\\
+      \textbf{Services}     & provide access to terminologies via an API\\
+    \end{tabular}
+  \end{tikzfigure}
+
+  Examples: BARTOC
+  \cite{Ledl2016,Voss2016b},
+  GFBio Terminology Service \cite{Karam2016} \ldots
+
+  % TR definition in Wikidata: <http://www.wikidata.org/entity/Q22692845>
+}
+\note[angle=65,targetoffsety=15mm,width=230mm,rotate=-6]
+  {$\rightarrow$ \url{http://bartoc.org/en/terminology-registries}}
+
+\block{Terminology Services}{
+
+  \textit{short illustration of a TR service / API e.g. GFBio}
+
+}
+\end{columns}
+
+
+\block{Survey}{
+  \textit{
+    Main part of the poster with overview of terminology registries
+    (BARTOC lists almost 80)
+    with their types and subject areas.
+  }
+%* description and capabilities of terminology registries
+%
+%    * description
+%    * disciplines
+%    * hosting institution
+%    * target audience
+%    * terminology management
+%    * services
+%        * simple search
+%        * query expansion / hierarchy oriented services
+%        * mappings
+%        * reasoning
+}
+
+
+% references and outlook
+\begin{columns}
+\column{.5}
+\block{References}{
+  \vspace{0.5em}
+  \begin{center}\mbox{}\vspace{-\baselineskip}
+  \printbibliography[heading=none]
+  \end{center}
+}
+\column{.5}
+\block{Where to go next?}{
+  \begin{itemize}
+    \item The JSKOS data format for Knowledge Organization Systems
+          provides uniform description of terminologies and terminology registries
+          \cite{Ledl2016,Voss2016b} especially for web applications:
+          \url{https://gbv.github.io/jskos/}
+    \item
+      There is an RDA Vocabulary Services Interest Group (VSIG)
+    \item
+      Register your terminologies and registries in BARTOC!
+    \item
+      Put your terminologies into a Terminology Service such as GFBio!
+    \item
+      \ldots % TODO
+  \end{itemize}
+}
+\end{columns}
+
+
+% end of poster content
+
+% TODO: put this into the style
+\makeatletter
+\begin{pgfonlayer}{backgroundlayer}
+  \clip (bottomleft) rectangle (topright);
+  \ifdefined\@about
+    \node[inner sep=4pt, anchor=south west, draw=none]
+      at (-0.5\textwidth+7pt, -0.5\textheight+7pt){\@about};
+  \fi
+  \node[inner sep=4pt, anchor=south, draw=none]
+    at (7pt, -0.5\textheight+7pt){
+      \ifdefined\@doi 
+        \href{https://doi.org/\@doi}{DOI \@doi}
+      \fi    
+      \ifdefined\@date 
+        (\@date)
+      \fi    
+  };
+  \ifdefined\@license
+    \node[inner sep=4pt, anchor=south east, draw=none]
+      at (0.5\textwidth-7pt, -0.5\textheight+7pt){\@license};
+  \fi
+\end{pgfonlayer}
+
+\end{document}
